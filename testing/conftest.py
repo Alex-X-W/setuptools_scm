@@ -22,6 +22,9 @@ class Wd(object):
     commit_command = None
     add_command = None
 
+    def __repr__(self):
+        return "<WD {cwd}>".format(cwd=self.cwd)
+
     def __init__(self, cwd):
         self.cwd = cwd
         self.__counter = itertools.count()
