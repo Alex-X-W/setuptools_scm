@@ -1,6 +1,7 @@
 import os
 import itertools
 import pytest
+import six
 
 os.environ["SETUPTOOLS_SCM_DEBUG"] = "1"
 VERSION_PKGS = ["setuptools", "setuptools_scm"]
@@ -36,7 +37,10 @@ class Wd(object):
         filename = self.cwd / name
         if kw:
             value = value.format(**kw)
-        filename.write_text(value)
+        if isinstance(value, six.text_type):
+            filename.write_text(value)
+        else:
+            filename.write_bytes(value)
         return filename
 
     def _reason(self, given_reason):

@@ -146,8 +146,8 @@ def test_version_bump_from_merge_commit(wd):
 def test_version_bump_from_commit_including_hgtag_mods(wd):
     """ Test the case where a commit includes changes to .hgtags and other files
     """
-    with wd.cwd.joinpath(".hgtags").open("a") as tagfile:
-        tagfile.write("0  0\n")
+    with wd.cwd.joinpath(".hgtags").open("ab") as tagfile:
+        tagfile.write(b"0  0\n")
     wd.write("branchfile", "branchtext")
     wd(wd.add_command)
     assert wd.version.startswith("1.0.1.dev1+")  # bump from dirty version
