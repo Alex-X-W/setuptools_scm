@@ -33,10 +33,10 @@ class Wd(object):
         return do(cmd, self.cwd)
 
     def write(self, name, value, **kw):
-        filename = self.cwd.join(name)
+        filename = self.cwd / name
         if kw:
             value = value.format(**kw)
-        filename.write(value)
+        filename.write_text(value)
         return filename
 
     def _reason(self, given_reason):
@@ -83,5 +83,7 @@ def debug_mode():
 
 
 @pytest.fixture
-def wd(tmpdir):
-    return Wd(tmpdir.ensure("wd", dir=True))
+def wd(tmp_path):
+    target_wd = tmp_path.resolve() / "wd"
+    target_wd.mkdir()
+    return Wd(target_wd)
